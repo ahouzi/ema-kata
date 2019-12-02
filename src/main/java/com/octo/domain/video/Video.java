@@ -14,15 +14,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Video {
 
 	@Id
@@ -40,19 +46,6 @@ public class Video {
 	@Enumerated(EnumType.STRING)
 	@Column
 	private Level level;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> tags = new ArrayList<>();
-
-	public boolean isOneTagIsPresent(List<String> listtags) {
-		for (String tag : tags) {
-			if (listtags.contains(tag))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean filterByLevel(Level level1) {
-		return level != null ? level.equals(level1) : false;
-	}
-
 }

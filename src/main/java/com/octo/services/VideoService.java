@@ -25,11 +25,7 @@ public class VideoService {
 	@Autowired
 	private VideoToVideoDTOMapper videoToVideoDTOMapper;
 
-	public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {
-		
-		List<Video> videos = videoRepository.findAll().stream().filter(video -> video.isOneTagIsPresent(tags)).filter(video -> video.filterByLevel(level)).collect(Collectors.toList());
-        return videos.stream().map(video -> {return videoToVideoDTOMapper.convert(video);}).collect(Collectors.toList());
-
+	public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {      		
+		return videoRepository.findByLevelAndTags(level, tags).stream().map(videoToVideoDTOMapper::convert).collect(Collectors.toList());
 	}
-
 }
