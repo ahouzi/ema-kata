@@ -25,24 +25,34 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public class Video {
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private String id;
-    @Column
-    private String title;
-    @Column
-    private String description;
-    @Column
-    private String url;
-    @Column
-    private Double duration;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Level level;
-    @ElementCollection
-    private List<String> tags = new ArrayList<>();
+	@Id
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	private String id;
+	@Column
+	private String title;
+	@Column
+	private String description;
+	@Column
+	private String url;
+	@Column
+	private Double duration;
+	@Enumerated(EnumType.STRING)
+	@Column
+	private Level level;
+	@ElementCollection
+	private List<String> tags = new ArrayList<>();
 
+	public boolean isOneTagIsPresent(List<String> listtags) {
+		for (String tag : tags) {
+			if (listtags.contains(tag))
+				return true;
+		}
+		return false;
+	}
 
+	public boolean filterByLevel(Level level1) {
+		return level != null ? level.equals(level1) : false;
+	}
 
 }
