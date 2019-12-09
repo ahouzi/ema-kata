@@ -1,12 +1,10 @@
 package com.octo.services;
 
 import com.octo.domain.enums.Level;
-import com.octo.domain.video.Video;
 import com.octo.dto.video.VideoDTO;
 import com.octo.mappers.VideoToVideoDTOMapper;
 import com.octo.repository.VideoRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +23,12 @@ public class VideoService {
 	@Autowired
 	private VideoToVideoDTOMapper videoToVideoDTOMapper;
 
-	public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {      		
-		return videoRepository.findByLevelAndTags(level, tags).stream().map(videoToVideoDTOMapper::convert).collect(Collectors.toList());
+	public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {
+
+		if (tags == null && level == null)
+			return videoRepository.findAll().stream().map(videoToVideoDTOMapper::convert).collect(Collectors.toList());
+
+		return videoRepository.findByLevelOrTags(level, tags).stream().map(videoToVideoDTOMapper::convert)
+				.collect(Collectors.toList());
 	}
 }

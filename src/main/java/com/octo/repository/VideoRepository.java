@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface VideoRepository extends JpaRepository<Video, String>, JpaSpecificationExecutor<Video> {
 	public List<Video> findByLevelAndTags(Level level, List<String> tags);
+	public List<Video> findByLevelOrTags(Level level, List<String> tags);
 }
