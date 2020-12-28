@@ -1,1 +1,1 @@
-# octo kata
+# EMA kata
