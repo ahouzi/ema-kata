@@ -24,20 +24,15 @@ public class VideoService {
 
     public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {
 
-        // TODO code goes here
-        // 1. search videos by tags AND/OR level
-        // 2. use videoToVideoDTOMapper to map videos to videos DTO
-        // 3 return the list
 		if (tags == null && level == null){
-			return videoRepository.findAll().stream().map(videoToVideoDTOMapper::convert).collect(Collectors.toList());
+			return videoRepository.findAll();
         }
 
         if (tags == null || level == null){
-                return videoRepository.findByLevelOrTags(level, tags).stream().map(videoToVideoDTOMapper::convert)
-				.collect(Collectors.toList());        }
+                return videoRepository.findByLevelOrTags(level, tags);
+        }
 
-		return videoRepository.findByLevelAndTags(level, tags).stream().map(videoToVideoDTOMapper::convert)
-				.collect(Collectors.toList());
+		return videoRepository.findByLevelAndTags(level, tags);
     }
 
 
