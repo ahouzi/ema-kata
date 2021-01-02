@@ -37,8 +37,9 @@ public class VideoServiceTest {
 		list.add(videoToVideoDTOMapper.convert(videoTwo));
 		when(videoService.retrieveVideosByTagAndLevel(null, null)).thenReturn(list);
 
-		List<VideoDTO> results = videoService.retrieveVideosByTagAndLevel(null, null);
-		assertEquals(results.size(), 2);
+        mockMvc.perform(get(ApiPaths.V1 + ApiPaths.VIDEOS ))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
     }
     @When("When users want to get videos with level")
     public void retrieveVideoByTagsAndOrLevel_withLevel() {
@@ -50,8 +51,10 @@ public class VideoServiceTest {
 		list.add(videoToVideoDTOMapper.convert(videoTwo));
 		when(videoService.retrieveVideosByTagAndLevel(null, Level.EASY)).thenReturn(list);
 
-		List<VideoDTO> results = videoService.retrieveVideosByTagAndLevel(null, Level.EASY);
-		assertEquals(results.size(), 2);
+		String params = "?level=" + Level.EASY;
+        mockMvc.perform(get(ApiPaths.V1 + ApiPaths.VIDEOS + params))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
     }
 
     @When("When users want to get videos with tags")
@@ -64,8 +67,10 @@ public class VideoServiceTest {
 		list.add(videoToVideoDTOMapper.convert(videoTwo));
 		when(videoService.retrieveVideosByTagAndLevel(Arrays.asList("talk"), null)).thenReturn(list);
 
-		List<VideoDTO> results = videoService.retrieveVideosByTagAndLevel(Arrays.asList("talk"), null);
-		assertEquals(results.size(), 1);
+		String params = "?tags=talk";
+        mockMvc.perform(get(ApiPaths.V1 + ApiPaths.VIDEOS + params))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
     @When("When users want to get videos with tags and level")
@@ -78,8 +83,10 @@ public class VideoServiceTest {
 		list.add(videoToVideoDTOMapper.convert(videoTwo));
 		when(videoService.retrieveVideosByTagAndLevel(Arrays.asList("talk"), Level.EASY)).thenReturn(list);
 
-		List<VideoDTO> results = videoService.retrieveVideosByTagAndLevel(Arrays.asList("talk"), Level.EASY);
-		assertEquals(results.size(), 1);
+		String params = "?tags=talk&level=" + Level.EASY;
+        mockMvc.perform(get(ApiPaths.V1 + ApiPaths.VIDEOS + params))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
 
