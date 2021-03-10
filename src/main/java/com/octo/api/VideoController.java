@@ -1,6 +1,7 @@
 package com.octo.api;
 
 import com.octo.domain.enums.Level;
+import com.octo.domain.video.Video;
 import com.octo.dto.video.VideoDTO;
 
 import com.octo.holders.ApiPaths;
@@ -9,6 +10,8 @@ import com.octo.services.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +38,5 @@ public class VideoController {
         LOGGER.info("Récupération des videos des cours par tags ou/et niveau");
         return videoService.retrieveVideosByTagAndLevel(tags, level);
     }
-
-
 
 }
