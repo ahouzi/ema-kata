@@ -10,5 +10,7 @@ import java.util.List;
 
 public interface VideoRepository extends JpaRepository<Video, String>, JpaSpecificationExecutor<Video> {
     List<Video> getVideosByTagsAndLevel(List<String> tags, Level level);
+    List<Video> getVideosByTags(List<String> tags);
+    List<Video> getVideosByLevel(Level level);
 
 }

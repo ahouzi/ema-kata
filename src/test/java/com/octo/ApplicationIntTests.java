@@ -1,5 +1,6 @@
 package com.octo;
 
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

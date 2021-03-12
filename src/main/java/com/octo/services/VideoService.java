@@ -28,8 +28,19 @@ public class VideoService {
     public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {
 
         // TODO code goes here
+        List<Video> videos;
         // 1. search videos by tags AND/OR level
-        List<Video> videos = videoRepository.getVideosByTagsAndLevel(tags, level);
+        if(level==null){
+            LOGGER.info("SEARCHING BY TAGS...");
+            videos = videoRepository.getVideosByTags(tags);
+        }else if(tags.isEmpty()){
+            LOGGER.info("SEARCHING BY LEVEL...");
+            videos = videoRepository.getVideosByLevel(level);
+        }else{
+            LOGGER.info("SEARCHING BY TAGS & LEVEL...");
+            videos = videoRepository.getVideosByTagsAndLevel(tags, level);
+        }
+
         // 2. use videoToVideoDTOMapper to map videos to videos DTO
         List<VideoDTO> videoDTOS = new ArrayList<>();
         for(Video v: videos)
@@ -39,6 +50,17 @@ public class VideoService {
         return videoDTOS;
     }
 
+    public List<VideoDTO> retrieveAllVideos(){
+
+        LOGGER.info("FETCHING * VIDEOS...");
+        List<Video> videos = videoRepository.findAll();
+        List<VideoDTO> videoDTOS = new ArrayList<>();
+        for(Video v: videos)
+            videoDTOS.add(videoToVideoDTOMapper.convert(v));
+
+        return videoDTOS;
+
+    }
 
 
 }
