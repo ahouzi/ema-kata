@@ -25,7 +25,7 @@ public class VideoService {
     public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {
 
         // TODO code goes here
-        // 1. search videos by tags AND/OR level
+        // 1. search videos by tags AND/OR level don't use a simple @QUERY
         // 2. use videoToVideoDTOMapper to map videos to videos DTO
         // 3 return the list
 
