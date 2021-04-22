@@ -37,12 +37,10 @@ public class VideoService {
         // TODO code goes here
         // 1. search videos by tags AND/OR level don't use a simple @QUERY
         
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Video> cq = cb.createQuery(Video.class);
-        
+        // CriteriaBuilder cb = em.getCriteriaBuilder();
+        // CriteriaQuery<Video> cq = cb.createQuery(Video.class);
+
         List<Video> videos = videoRepository.findAll();
-        System.out.println(tags);
-        System.out.println(videos);
 
         // 2. use videoToVideoDTOMapper to map videos to videos DTO
         List<VideoDTO> videosDTO = videos.stream().map(t -> videoToVideoDTOMapper.convert(t)).collect(Collectors.toList());
