@@ -42,7 +42,4 @@ public class Video {
     private Level level;
     @ElementCollection
     private List<String> tags = new ArrayList<>();
-
-
-
 }

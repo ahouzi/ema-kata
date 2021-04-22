@@ -1,10 +1,19 @@
 package com.octo.services;
 
 import com.octo.domain.enums.Level;
+import com.octo.domain.video.Video;
 import com.octo.dto.video.VideoDTO;
 import com.octo.mappers.VideoToVideoDTOMapper;
 import com.octo.repository.VideoRepository;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.swing.text.ViewFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +29,26 @@ public class VideoService {
     @Autowired
     private VideoToVideoDTOMapper videoToVideoDTOMapper;
 
+    EntityManager em;
 
 
     public List<VideoDTO> retrieveVideosByTagAndLevel(List<String> tags, Level level) {
 
         // TODO code goes here
         // 1. search videos by tags AND/OR level don't use a simple @QUERY
-        // 2. use videoToVideoDTOMapper to map videos to videos DTO
-        // 3 return the list
+        
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Video> cq = cb.createQuery(Video.class);
+        
+        List<Video> videos = videoRepository.findAll();
+        System.out.println(tags);
+        System.out.println(videos);
 
-        return null;
+        // 2. use videoToVideoDTOMapper to map videos to videos DTO
+        List<VideoDTO> videosDTO = videos.stream().map(t -> videoToVideoDTOMapper.convert(t)).collect(Collectors.toList());
+
+        // 3 return the list
+        return videosDTO;
     }
 
 
